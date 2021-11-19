@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:movie_search/constants.dart';
+import 'package:movie_search/models/movie_data.dart';
 import 'package:movie_search/widgets/app_bar.dart';
 import 'package:movie_search/widgets/history_list.dart';
 import 'package:movie_search/widgets/search_text_field.dart';
+import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
   static const String id = "search";
 
-  SearchScreen({Key? key}) : super(key: key);
+  const SearchScreen({Key? key}) : super(key: key);
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -37,39 +40,49 @@ class _SearchScreenState extends State<SearchScreen> {
       child: Scaffold(
         appBar: ReusableAppBar.withFavorite(context),
         body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: Stack(
             children: [
-              Container(
-                height: 50,
-                color: const Color(0xffC9C9CE),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          left: 7,
-                          top: 9,
-                          bottom: 7,
-                          right: _cancelBtnVisibility ? 0 : 7,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    height: 50,
+                    color: const Color(0xffC9C9CE),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: 7,
+                              top: 9,
+                              bottom: 7,
+                              right: _cancelBtnVisibility ? 0 : 7,
+                            ),
+                            child: SearchTextField(
+                              onTap: () {
+                                textFieldFocus(true, context);
+                              },
+                            ),
+                          ),
                         ),
-                        child: SearchTextField(
-                          onTap: () {
-                            textFieldFocus(true, context);
-                          },
-                        ),
-                      ),
+                        getCancelButton(context),
+                      ],
                     ),
-                    getCancelButton(context),
-                  ],
-                ),
+                  ),
+                  const Expanded(
+                    child: HistoryList(),
+                  ),
+                ],
               ),
-              const Expanded(
-                child: HistoryList(),
-              ),
+              Provider.of<MovieData>(context, listen: false).queryStage
+                  ? const SpinKitPouringHourGlassRefined(
+                      color: Color(0xffff9200),
+                      size: 100.0,
+                    )
+                  : Stack(),
             ],
           ),
         ),

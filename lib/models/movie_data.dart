@@ -1,29 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:movie_search/models/movie.dart';
 import 'package:movie_search/services/networking.dart';
+//import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MovieData extends ChangeNotifier {
-  /// Get 5 search history
-  List<String> _searchHistory = [];
-  String _currentSearch = "";
-
-  void addSearchHistory(String query) {
-    if (_searchHistory.length >= 5) {
-      _searchHistory.removeAt(0);
-    }
-    _searchHistory.add(query);
-    _currentSearch = query;
-    notifyListeners();
-  }
-
-  String getSearchHistory(int index) {
-    return _searchHistory[index];
-  }
-
-  String get currentSearch => _currentSearch;
-
-  int get historyCount => _searchHistory.length;
-
   /// Network helper: for query purpose
   NetworkHelper helper = NetworkHelper();
 
@@ -51,6 +31,10 @@ class MovieData extends ChangeNotifier {
   ];
 
   /// Query from search string
+  bool _stillQuery = false;
+  bool get queryStage => _stillQuery;
+  void toggleQueryState() => _stillQuery = !_stillQuery;
+
   Future<bool> queryMovie(String queryString, int page) async {
     Map apiReturn = await helper.getData(query: queryString, page: page);
 

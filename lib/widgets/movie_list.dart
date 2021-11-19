@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_search/models/movie_data.dart';
+import 'package:movie_search/models/search_data.dart';
 import 'package:provider/provider.dart';
 
 import 'movie_tile.dart';
@@ -12,7 +13,7 @@ class MovieList extends StatefulWidget {
 }
 
 class _MovieListState extends State<MovieList> {
-  var _controller = ScrollController();
+  final _controller = ScrollController();
   int pageShow = 1;
   bool haveMore = true;
 
@@ -29,7 +30,7 @@ class _MovieListState extends State<MovieList> {
               _controller.position.maxScrollExtent - 24) {
         pageShow++;
         String queryString =
-            Provider.of<MovieData>(context, listen: false).currentSearch;
+            Provider.of<SearchData>(context, listen: false).currentSearch;
         if (await Provider.of<MovieData>(context, listen: false)
             .queryMovie(queryString, pageShow)) {
           haveMore = true;
