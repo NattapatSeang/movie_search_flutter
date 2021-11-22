@@ -48,4 +48,12 @@ class Movie {
           json['vote_average'] != null ? json['vote_average'].toDouble() : 0,
     );
   }
+
+  Map toJson() => {
+        'poster_path': posterPath,
+        'title': movieName,
+        'release_date': releaseDate,
+        'overview': overview,
+        'vote_average': voteAvg,
+      };
 }

@@ -66,11 +66,16 @@ class _MovieListState extends State<MovieList> {
                       minimumSize: Size(50, 30),
                       alignment: Alignment.centerLeft),
                   onPressed: () {
-                    //print(movieData);
+                    movieData.addFavorite(movieData.getMovie(
+                      index: index,
+                      isFromFavorite: false,
+                    ));
                   },
                   child: MovieTile(
-                    movie:
-                        movieData.getMovie(index: index, isFromFavorite: false),
+                    movie: movieData.getMovie(
+                      index: index,
+                      isFromFavorite: false,
+                    ),
                   ),
                 ),
                 Container(

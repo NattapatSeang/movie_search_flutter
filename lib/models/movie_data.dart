@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:movie_search/models/movie.dart';
+import 'package:movie_search/services/local_saving.dart';
 import 'package:movie_search/services/networking.dart';
 //import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -10,8 +11,24 @@ class MovieData extends ChangeNotifier {
   /// List of favorite movies
   List<Movie> _favoriteMovies = [];
 
-  void addFavorite(Movie newFavorite) {
+  // Mock print
+  void mockPrint() {
+    for (Movie movie in _favoriteMovies) {
+      print(movie.movieName);
+    }
+    print("_________");
+  }
+
+  void initLoadFavorites() async {
+    List result = await LocalSaveHelper.readObjectList();
+    _favoriteMovies = result.map((data) => Movie.fromJson(data)).toList();
+    mockPrint();
+    //print(_favoriteMovies.last.movieName);
+  }
+
+  void addFavorite(Movie newFavorite) async {
     _favoriteMovies.add(newFavorite);
+    await LocalSaveHelper.writeObjectList(_favoriteMovies);
     notifyListeners();
   }
 
@@ -40,6 +57,8 @@ class MovieData extends ChangeNotifier {
 
     if (apiReturn != null) {
       var result = apiReturn["results"] as List;
+
+      /// will change later
       if (result.length != 0) {
         if (page == 1) {
           _queryResult = result.map((data) => Movie.fromJson(data)).toList();
