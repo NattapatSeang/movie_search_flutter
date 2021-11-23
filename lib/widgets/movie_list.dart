@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_search/models/movie_data.dart';
 import 'package:movie_search/models/search_data.dart';
+import 'package:movie_search/screens/movie_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'movie_tile.dart';
@@ -19,7 +20,6 @@ class _MovieListState extends State<MovieList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     pageShow = 1;
 
@@ -47,9 +47,7 @@ class _MovieListState extends State<MovieList> {
       return ListView.builder(
         controller: _controller,
         itemBuilder: (context, index) {
-          if (index ==
-              Provider.of<MovieData>(context)
-                  .movieCount(isFromFavorite: false)) {
+          if (index == movieData.movieCount(isFromFavorite: false)) {
             return haveMore
                 ? const CupertinoActivityIndicator(
                     radius: 24,
@@ -66,10 +64,14 @@ class _MovieListState extends State<MovieList> {
                       minimumSize: Size(50, 30),
                       alignment: Alignment.centerLeft),
                   onPressed: () {
-                    movieData.addFavorite(movieData.getMovie(
-                      index: index,
-                      isFromFavorite: false,
-                    ));
+                    Navigator.pushNamed(
+                      context,
+                      MovieDetailScreen.id,
+                      arguments: movieData.getMovie(
+                        index: index,
+                        isFromFavorite: false,
+                      ),
+                    );
                   },
                   child: MovieTile(
                     movie: movieData.getMovie(

@@ -21,15 +21,15 @@ class MovieSearch extends StatelessWidget {
         ChangeNotifierProvider<SearchData>(create: (context) => SearchData()),
       ],
       child: MaterialApp(
-        home: SafeArea(
+        home: const SafeArea(
           child: MovieListScreen(),
         ),
         initialRoute: SearchScreen.id,
         routes: {
-          SearchScreen.id: (context) => SearchScreen(),
-          FavoriteScreen.id: (context) => FavoriteScreen(),
-          MovieListScreen.id: (context) => MovieListScreen(),
-          MovieDetailScreen.id: (context) => MovieDetailScreen(),
+          SearchScreen.id: (context) => const SearchScreen(),
+          FavoriteScreen.id: (context) => const FavoriteScreen(),
+          MovieListScreen.id: (context) => const MovieListScreen(),
+          MovieDetailScreen.id: (context) => const MovieDetailScreen(),
         },
       ),
     );

@@ -1,8 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:movie_search/models/movie.dart';
 import 'package:movie_search/services/local_saving.dart';
 import 'package:movie_search/services/networking.dart';
-//import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MovieData extends ChangeNotifier {
   /// Network helper: for query purpose
@@ -19,6 +19,11 @@ class MovieData extends ChangeNotifier {
     print("_________");
   }
 
+  bool inFavorite(Movie movie) => (_favoriteMovies.firstWhereOrNull(
+        (element) => element.movieName == movie.movieName,
+      ) !=
+      null);
+
   void initLoadFavorites() async {
     List result = await LocalSaveHelper.readObjectList();
     _favoriteMovies = result.map((data) => Movie.fromJson(data)).toList();
@@ -32,20 +37,15 @@ class MovieData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeFavorite(Movie removeMovie) {
-    _favoriteMovies.remove(removeMovie);
+  void removeFavorite(Movie removeMovie) async {
+    _favoriteMovies
+        .removeWhere((element) => element.movieName == removeMovie.movieName);
+    await LocalSaveHelper.writeObjectList(_favoriteMovies);
     notifyListeners();
   }
 
   /// List of query result -> return true if query is success.
-  List<Movie> _queryResult = [
-    Movie(
-        posterPath: '/r7XF6duZy5ZXmOX7HE3fKGV1WLN.jpg',
-        movieName: 'adff',
-        releaseDate: '1999-22-22',
-        overview: 'hekko',
-        voteAvg: 2)
-  ];
+  List<Movie> _queryResult = [];
 
   /// Query from search string
   bool _stillQuery = false;

@@ -63,7 +63,7 @@ class MovieTile extends StatelessWidget {
                   movie.overview,
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
-                  style: kBlackText,
+                  style: kBlackTextSmall,
                 ),
               ],
             ),

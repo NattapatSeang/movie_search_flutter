@@ -21,9 +21,19 @@ const kGreyText = TextStyle(
   fontSize: 16,
 );
 
-const kBlackText = TextStyle(
+const kBlackTextSmall = TextStyle(
   color: Colors.black,
   fontSize: 14,
+);
+
+const kBlackText = TextStyle(
+  color: Colors.black,
+  fontSize: 16,
+);
+
+const kWhiteText = TextStyle(
+  color: Colors.white,
+  fontSize: 16,
 );
 
 const kMovieTitle = TextStyle(
