@@ -12,7 +12,7 @@ class MovieListScreen extends StatelessWidget {
       appBar: ReusableAppBar.withBack(context),
       body: SafeArea(
         child: Container(
-          child: MovieList(),
+          child: MovieList(forFavorite: false),
         ),
       ),
     );

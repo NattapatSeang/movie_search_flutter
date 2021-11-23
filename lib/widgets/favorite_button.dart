@@ -45,8 +45,6 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     return GestureDetector(
       onTap: () {
         updateFavorite();
-        print(isFavorite);
-        Provider.of<MovieData>(context, listen: false).mockPrint();
       },
       child: Container(
         color: const Color(0xffff9200),

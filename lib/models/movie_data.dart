@@ -11,14 +11,6 @@ class MovieData extends ChangeNotifier {
   /// List of favorite movies
   List<Movie> _favoriteMovies = [];
 
-  // Mock print
-  void mockPrint() {
-    for (Movie movie in _favoriteMovies) {
-      print(movie.movieName);
-    }
-    print("_________");
-  }
-
   bool inFavorite(Movie movie) => (_favoriteMovies.firstWhereOrNull(
         (element) => element.movieName == movie.movieName,
       ) !=
@@ -27,7 +19,6 @@ class MovieData extends ChangeNotifier {
   void initLoadFavorites() async {
     List result = await LocalSaveHelper.readObjectList();
     _favoriteMovies = result.map((data) => Movie.fromJson(data)).toList();
-    mockPrint();
     //print(_favoriteMovies.last.movieName);
   }
 

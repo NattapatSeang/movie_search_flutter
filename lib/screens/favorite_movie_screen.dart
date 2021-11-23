@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_search/widgets/app_bar.dart';
+import 'package:movie_search/widgets/movie_list.dart';
 
 class FavoriteScreen extends StatelessWidget {
   static const String id = "favorite";
@@ -11,7 +12,7 @@ class FavoriteScreen extends StatelessWidget {
       appBar: ReusableAppBar.withBack(context),
       body: SafeArea(
         child: Container(
-          child: Text("This is favorite screen"),
+          child: MovieList(forFavorite: true),
         ),
       ),
     );

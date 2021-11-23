@@ -8,7 +8,10 @@ import 'package:provider/provider.dart';
 import 'movie_tile.dart';
 
 class MovieList extends StatefulWidget {
-  // Create a variable
+  final bool forFavorite;
+
+  const MovieList({required this.forFavorite});
+
   @override
   State<MovieList> createState() => _MovieListState();
 }
@@ -47,14 +50,19 @@ class _MovieListState extends State<MovieList> {
       return ListView.builder(
         controller: _controller,
         itemBuilder: (context, index) {
-          if (index == movieData.movieCount(isFromFavorite: false)) {
-            return haveMore
-                ? const CupertinoActivityIndicator(
-                    radius: 24,
-                  )
-                : const Center(
-                    child: Text("No more data"),
-                  );
+          if (index ==
+              movieData.movieCount(isFromFavorite: widget.forFavorite)) {
+            if (widget.forFavorite) {
+              return Container();
+            } else {
+              return haveMore
+                  ? const CupertinoActivityIndicator(
+                      radius: 24,
+                    )
+                  : const Center(
+                      child: Text("No more data"),
+                    );
+            }
           } else {
             return Column(
               children: [
@@ -69,14 +77,14 @@ class _MovieListState extends State<MovieList> {
                       MovieDetailScreen.id,
                       arguments: movieData.getMovie(
                         index: index,
-                        isFromFavorite: false,
+                        isFromFavorite: widget.forFavorite,
                       ),
                     );
                   },
                   child: MovieTile(
                     movie: movieData.getMovie(
                       index: index,
-                      isFromFavorite: false,
+                      isFromFavorite: widget.forFavorite,
                     ),
                   ),
                 ),
@@ -89,9 +97,9 @@ class _MovieListState extends State<MovieList> {
             );
           }
         },
-        itemCount:
-            Provider.of<MovieData>(context).movieCount(isFromFavorite: false) +
-                1,
+        itemCount: Provider.of<MovieData>(context)
+                .movieCount(isFromFavorite: widget.forFavorite) +
+            1,
       );
     });
   }
