@@ -42,13 +42,14 @@ class _MovieListScreenState extends State<MovieListScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            Container(
-              child: MovieList(forFavorite: false),
-            ),
+            const MovieList(forFavorite: false),
             Provider.of<MovieData>(context, listen: false).queryStage
-                ? const SpinKitPouringHourGlassRefined(
-                    color: Color(0xffff9200),
-                    size: 100.0,
+                ? Container(
+                    color: Colors.white.withOpacity(0.4),
+                    child: const SpinKitPouringHourGlassRefined(
+                      color: Color(0xffff9200),
+                      size: 100.0,
+                    ),
                   )
                 : Stack(),
           ],
