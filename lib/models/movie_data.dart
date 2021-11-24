@@ -19,7 +19,7 @@ class MovieData extends ChangeNotifier {
   void initLoadFavorites() async {
     List result = await LocalSaveHelper.readObjectList();
     _favoriteMovies = result.map((data) => Movie.fromJson(data)).toList();
-    //print(_favoriteMovies.last.movieName);
+    notifyListeners();
   }
 
   void addFavorite(Movie newFavorite) async {
@@ -35,36 +35,76 @@ class MovieData extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> updateFavorite() async {
+    try {
+      for (var favMovie in _favoriteMovies) {
+        List<Movie>? temp = await getQueryList(favMovie.movieName, null);
+        if (temp != null) {
+          Movie? updatedFavMovie = temp.firstWhereOrNull(
+            (element) => element.movieName == favMovie.movieName,
+          );
+          if (updatedFavMovie != null) {
+            removeFavorite(favMovie);
+            addFavorite(favMovie);
+          }
+        }
+      }
+    } catch (e) {
+      notifyListeners();
+      return false;
+    }
+    notifyListeners();
+    return true;
+  }
+
   /// List of query result -> return true if query is success.
   List<Movie> _queryResult = [];
+  bool get isResultEmpty => _queryResult.isEmpty;
 
   /// Query from search string
   bool _stillQuery = false;
   bool get queryStage => _stillQuery;
   void toggleQueryState() => _stillQuery = !_stillQuery;
 
-  Future<bool> queryMovie(String queryString, int page) async {
-    Map apiReturn = await helper.getData(query: queryString, page: page);
+  bool _hasError = false;
+  bool get hasError => _hasError;
 
-    if (apiReturn != null) {
-      var result = apiReturn["results"] as List;
+  Future<List<Movie>?> getQueryList(String queryString, int? page) async {
+    try {
+      Map? apiReturn = await helper.getData(query: queryString, page: page);
 
-      /// will change later
-      if (result.length != 0) {
+      var result = apiReturn!["results"] as List;
+
+      return result.map((data) => Movie.fromJson(data)).toList();
+    } catch (e) {
+      _hasError = true;
+      notifyListeners();
+    }
+    return null;
+  }
+
+  Future<bool> queryMovie(String queryString, int? page) async {
+    if (page == 1) {
+      _queryResult = [];
+      _hasError = false;
+    }
+    if (!_hasError) {
+      List<Movie>? temp = await getQueryList(queryString, page);
+
+      if (temp != null) {
         if (page == 1) {
-          _queryResult = result.map((data) => Movie.fromJson(data)).toList();
+          _queryResult = temp;
         } else {
-          //print("he: ${result[0]['poster_path']}");
-          var temp = result.map((data) => Movie.fromJson(data)).toList();
           _queryResult.addAll(temp);
         }
-        notifyListeners();
-        return true;
+        if (temp.isNotEmpty) {
+          notifyListeners();
+          return true;
+        }
       }
     }
     notifyListeners();
     return false;
-    //_queryResult = result;
   }
 
   /// Get data from provider

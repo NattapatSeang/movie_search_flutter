@@ -56,9 +56,15 @@ class _MovieListState extends State<MovieList> {
               return Container();
             } else {
               return haveMore
-                  ? const CupertinoActivityIndicator(
-                      radius: 24,
-                    )
+                  ? movieData.isResultEmpty
+                      ? movieData.queryStage
+                          ? Container()
+                          : const Center(
+                              child: Text("No data"),
+                            )
+                      : const CupertinoActivityIndicator(
+                          radius: 24,
+                        )
                   : const Center(
                       child: Text("No more data"),
                     );

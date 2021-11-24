@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:movie_search/constants.dart';
 import 'package:movie_search/models/movie_data.dart';
 import 'package:movie_search/widgets/app_bar.dart';
@@ -46,49 +45,39 @@ class _SearchScreenState extends State<SearchScreen> {
       child: Scaffold(
         appBar: ReusableAppBar.withFavorite(context),
         body: SafeArea(
-          child: Stack(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    height: 50,
-                    color: const Color(0xffC9C9CE),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              left: 7,
-                              top: 9,
-                              bottom: 7,
-                              right: _cancelBtnVisibility ? 0 : 7,
-                            ),
-                            child: SearchTextField(
-                              onTap: () {
-                                textFieldFocus(true, context);
-                              },
-                            ),
-                          ),
+              Container(
+                height: 50,
+                color: const Color(0xffC9C9CE),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: 7,
+                          top: 9,
+                          bottom: 7,
+                          right: _cancelBtnVisibility ? 0 : 7,
                         ),
-                        getCancelButton(context),
-                      ],
+                        child: SearchTextField(
+                          onTap: () {
+                            textFieldFocus(true, context);
+                          },
+                        ),
+                      ),
                     ),
-                  ),
-                  const Expanded(
-                    child: HistoryList(),
-                  ),
-                ],
+                    getCancelButton(context),
+                  ],
+                ),
               ),
-              Provider.of<MovieData>(context, listen: false).queryStage
-                  ? const SpinKitPouringHourGlassRefined(
-                      color: Color(0xffff9200),
-                      size: 100.0,
-                    )
-                  : Stack(),
+              const Expanded(
+                child: HistoryList(),
+              ),
             ],
           ),
         ),

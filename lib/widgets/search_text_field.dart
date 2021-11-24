@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movie_search/constants.dart';
-import 'package:movie_search/models/movie_data.dart';
 import 'package:movie_search/models/search_data.dart';
 import 'package:movie_search/screens/movie_list_screen.dart';
 import 'package:provider/provider.dart';
@@ -21,13 +20,8 @@ class SearchTextField extends StatelessWidget {
     return TextField(
       textInputAction: TextInputAction.search,
       onSubmitted: (value) async {
-        Provider.of<SearchData>(context, listen: false).addSearchHistory(value);
-        Provider.of<MovieData>(context, listen: false).toggleQueryState();
-        if (await Provider.of<MovieData>(context, listen: false)
-            .queryMovie(value, 1)) {
-          Provider.of<MovieData>(context, listen: false).toggleQueryState();
-          Navigator.pushNamed(context, MovieListScreen.id);
-        }
+        Provider.of<SearchData>(context, listen: false).setCurrentSearch(value);
+        Navigator.pushNamed(context, MovieListScreen.id);
       },
       onTap: () {
         onTap();

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movie_search/constants.dart';
+import 'package:movie_search/models/movie_data.dart';
 import 'package:movie_search/screens/favorite_movie_screen.dart';
 import 'package:movie_search/screens/search_screen.dart';
+import 'package:provider/provider.dart';
 
 class ReusableAppBar {
   static Widget _backButton(BuildContext context) {
@@ -20,7 +22,9 @@ class ReusableAppBar {
         ),
       ),
       onPressed: () {
-        Navigator.pop(context);
+        if (!Provider.of<MovieData>(context, listen: false).queryStage) {
+          Navigator.pop(context);
+        }
       },
     );
   }
@@ -33,7 +37,7 @@ class ReusableAppBar {
           padding: const EdgeInsets.only(right: 20.0),
           child: Center(
             child: TextButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.pushNamed(context, FavoriteScreen.id);
               },
               child: const Text(

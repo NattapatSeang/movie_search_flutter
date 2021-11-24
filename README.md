@@ -1,6 +1,6 @@
 # movie_search
 
-A new Flutter project.
+A project for testing flutter skill
 
 ## Getting Started
 
