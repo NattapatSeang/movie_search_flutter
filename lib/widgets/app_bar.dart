@@ -5,7 +5,11 @@ import 'package:movie_search/screens/favorite_movie_screen.dart';
 import 'package:movie_search/screens/search_screen.dart';
 import 'package:provider/provider.dart';
 
+/// ------------------------------------------------------------
+/// Widget for app bar
+/// ------------------------------------------------------------
 class ReusableAppBar {
+  /// Back button for appbar
   static Widget _backButton(BuildContext context) {
     return TextButton(
       child: RichText(
@@ -22,13 +26,14 @@ class ReusableAppBar {
         ),
       ),
       onPressed: () {
-        if (!Provider.of<MovieData>(context, listen: false).queryStage) {
+        if (!Provider.of<MovieData>(context, listen: false).queryState) {
           Navigator.pop(context);
         }
       },
     );
   }
 
+  /// app bar with favorite button
   static AppBar withFavorite(BuildContext context) {
     return AppBar(
       backgroundColor: Color(0xffF8F8F8),
@@ -54,6 +59,7 @@ class ReusableAppBar {
     );
   }
 
+  /// app bar with back button
   static AppBar withBack(BuildContext context) {
     return AppBar(
       backgroundColor: Color(0xffF8F8F8),
@@ -65,6 +71,7 @@ class ReusableAppBar {
     );
   }
 
+  /// app bar with back and toSearch button
   static AppBar withBackAndToSearch(BuildContext context) {
     return AppBar(
       backgroundColor: Color(0xffF8F8F8),

@@ -6,6 +6,9 @@ import 'package:movie_search/widgets/history_list.dart';
 import 'package:movie_search/widgets/search_text_field.dart';
 import 'package:provider/provider.dart';
 
+/// ------------------------------------------------------------
+/// Screen that show search bar and search history
+/// ------------------------------------------------------------
 class SearchScreen extends StatefulWidget {
   static const String id = "search";
 
@@ -18,9 +21,11 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   bool _cancelBtnVisibility = false;
 
+  /// Show cancel button if clicked on text field
   void textFieldFocus(bool isVisible, BuildContext context) {
     FocusScopeNode currentFocus = FocusScope.of(context);
 
+    // If clicked, show cancel button. If not, hide it
     setState(() {
       _cancelBtnVisibility = isVisible;
 
@@ -33,6 +38,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
+    // Get all the favorite movie that is saved locally
     Provider.of<MovieData>(context, listen: false).initLoadFavorites();
   }
 
@@ -85,6 +91,7 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
+  /// Cancel button. If clicked, unfocused the search bar
   Widget getCancelButton(BuildContext context) {
     return _cancelBtnVisibility
         ? TextButton(

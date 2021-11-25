@@ -7,7 +7,11 @@ import 'package:provider/provider.dart';
 
 import 'movie_tile.dart';
 
+/// ------------------------------------------------------------
+/// Widget class for movie list builder
+/// ------------------------------------------------------------
 class MovieList extends StatefulWidget {
+  /// put this as false if it's used for query. true if for favorite
   final bool forFavorite;
 
   const MovieList({required this.forFavorite});
@@ -17,8 +21,13 @@ class MovieList extends StatefulWidget {
 }
 
 class _MovieListState extends State<MovieList> {
+  /// Controller for scroll down
   final _controller = ScrollController();
+
+  /// Increment page
   int pageShow = 1;
+
+  /// Check if it have more
   bool haveMore = true;
 
   @override
@@ -28,6 +37,7 @@ class _MovieListState extends State<MovieList> {
 
     // Setup the listener.
     _controller.addListener(() async {
+      // If user scroll down to almost the bottom of list, get new page
       if (_controller.position.pixels <= _controller.position.maxScrollExtent &&
           _controller.position.pixels >
               _controller.position.maxScrollExtent - 24) {
@@ -35,7 +45,7 @@ class _MovieListState extends State<MovieList> {
         String queryString =
             Provider.of<SearchData>(context, listen: false).currentSearch;
         if (await Provider.of<MovieData>(context, listen: false)
-            .queryMovie(queryString, pageShow)) {
+            .queryMovieByPage(queryString, pageShow)) {
           haveMore = true;
         } else {
           haveMore = false;
@@ -50,23 +60,24 @@ class _MovieListState extends State<MovieList> {
       return ListView.builder(
         controller: _controller,
         itemBuilder: (context, index) {
+          // Reserve the last row to show loading indicator
           if (index ==
               movieData.movieCount(isFromFavorite: widget.forFavorite)) {
             if (widget.forFavorite) {
               return Container();
             } else {
-              return haveMore
-                  ? movieData.isResultEmpty
-                      ? movieData.queryStage
-                          ? Container()
+              return haveMore // Does it have more page?
+                  ? movieData.isResultEmpty // Is result empty in first page?
+                      ? movieData.queryState // Is it still query?
+                          ? Container() // If it's still query
                           : const Center(
-                              child: Text("No data"),
+                              child: Text("No data"), // If first page empty
                             )
                       : const CupertinoActivityIndicator(
-                          radius: 24,
+                          radius: 24, // If it have more page
                         )
                   : const Center(
-                      child: Text("No more data"),
+                      child: Text("No more data"), // If no data in page 2++
                     );
             }
           } else {
@@ -78,6 +89,7 @@ class _MovieListState extends State<MovieList> {
                       minimumSize: Size(50, 30),
                       alignment: Alignment.centerLeft),
                   onPressed: () {
+                    // Once pressed, it will show the information of that movie
                     Navigator.pushNamed(
                       context,
                       MovieDetailScreen.id,

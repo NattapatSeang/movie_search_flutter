@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:movie_search/constants.dart';
 import 'package:movie_search/models/movie.dart';
 
-/// Task Tile
+/// ------------------------------------------------------------
+/// Movie tile for each entry in movie list
+/// ------------------------------------------------------------
 class MovieTile extends StatelessWidget {
   final Movie movie;
 

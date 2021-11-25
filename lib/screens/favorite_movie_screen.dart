@@ -5,6 +5,9 @@ import 'package:movie_search/widgets/app_bar.dart';
 import 'package:movie_search/widgets/movie_list.dart';
 import 'package:provider/provider.dart';
 
+/// ------------------------------------------------------------
+/// Screen that show favorite list
+/// ------------------------------------------------------------
 class FavoriteScreen extends StatefulWidget {
   static const String id = "favorite";
   const FavoriteScreen({Key? key}) : super(key: key);
@@ -14,6 +17,7 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
+  ///Update the movie in favorite list
   void updateFavorite() async {
     Provider.of<MovieData>(context, listen: false).toggleQueryState();
     await Provider.of<MovieData>(context, listen: false).updateFavorite();
@@ -35,10 +39,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            Container(
-              child: MovieList(forFavorite: true),
-            ),
-            Provider.of<MovieData>(context, listen: false).queryStage
+            const MovieList(forFavorite: true),
+            Provider.of<MovieData>(context, listen: false).queryState
                 ? Container(
                     color: Colors.white.withOpacity(0.4),
                     child: const SpinKitPouringHourGlassRefined(

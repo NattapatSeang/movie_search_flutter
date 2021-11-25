@@ -4,6 +4,9 @@ import 'package:movie_search/models/search_data.dart';
 import 'package:movie_search/screens/movie_list_screen.dart';
 import 'package:provider/provider.dart';
 
+/// ------------------------------------------------------------
+/// Widget class for search text field
+/// ------------------------------------------------------------
 class SearchTextField extends StatelessWidget {
   final Function onTap;
 
@@ -20,6 +23,7 @@ class SearchTextField extends StatelessWidget {
     return TextField(
       textInputAction: TextInputAction.search,
       onSubmitted: (value) async {
+        // Once submit, move to query result page
         Provider.of<SearchData>(context, listen: false).setCurrentSearch(value);
         Navigator.pushNamed(context, MovieListScreen.id);
       },

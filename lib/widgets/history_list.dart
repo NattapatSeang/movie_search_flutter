@@ -4,6 +4,9 @@ import 'package:movie_search/models/search_data.dart';
 import 'package:movie_search/screens/movie_list_screen.dart';
 import 'package:provider/provider.dart';
 
+/// ------------------------------------------------------------
+/// Widget class for history list builder
+/// ------------------------------------------------------------
 class HistoryList extends StatelessWidget {
   const HistoryList({Key? key}) : super(key: key);
 
@@ -23,6 +26,7 @@ class HistoryList extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       alignment: Alignment.centerLeft),
                   onPressed: () {
+                    // Query when pressed on history text
                     Provider.of<SearchData>(context, listen: false)
                         .setCurrentSearch(searchData.getSearchHistory(index));
                     Navigator.pushNamed(context, MovieListScreen.id);

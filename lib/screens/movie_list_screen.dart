@@ -6,6 +6,9 @@ import 'package:movie_search/widgets/app_bar.dart';
 import 'package:movie_search/widgets/movie_list.dart';
 import 'package:provider/provider.dart';
 
+/// ------------------------------------------------------------
+/// Screen that show query result list
+/// ------------------------------------------------------------
 class MovieListScreen extends StatefulWidget {
   static const String id = "movie_list";
   const MovieListScreen({Key? key}) : super(key: key);
@@ -17,9 +20,11 @@ class MovieListScreen extends StatefulWidget {
 class _MovieListScreenState extends State<MovieListScreen> {
   String query = "";
 
+  /// Use provider to query the movie and send result to here
   void queryMovie() async {
     Provider.of<MovieData>(context, listen: false).toggleQueryState();
-    await Provider.of<MovieData>(context, listen: false).queryMovie(query, 1);
+    await Provider.of<MovieData>(context, listen: false)
+        .queryMovieByPage(query, 1);
     setState(() {
       if (!Provider.of<MovieData>(context, listen: false).hasError) {
         Provider.of<SearchData>(context, listen: false).addSearchHistory(query);
@@ -43,7 +48,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
         child: Stack(
           children: [
             const MovieList(forFavorite: false),
-            Provider.of<MovieData>(context, listen: false).queryStage
+            Provider.of<MovieData>(context, listen: false).queryState
                 ? Container(
                     color: Colors.white.withOpacity(0.4),
                     child: const SpinKitPouringHourGlassRefined(

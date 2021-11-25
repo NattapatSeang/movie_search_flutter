@@ -4,7 +4,9 @@ import 'package:movie_search/models/movie.dart';
 import 'package:movie_search/models/movie_data.dart';
 import 'package:provider/provider.dart';
 
-/// Favorite button
+/// ------------------------------------------------------------
+/// Widget class for favorite button
+/// ------------------------------------------------------------
 class FavoriteButton extends StatefulWidget {
   final Movie movie;
 
@@ -17,6 +19,7 @@ class FavoriteButton extends StatefulWidget {
 class _FavoriteButtonState extends State<FavoriteButton> {
   bool isFavorite = false;
 
+  /// Either add or remove this movie from favorite
   void updateFavorite() {
     if (isFavorite) {
       Provider.of<MovieData>(context, listen: false)
@@ -27,6 +30,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     setIsFavorite();
   }
 
+  /// Update the state of this favorite button: favorite or unfavorite
   void setIsFavorite() {
     setState(() {
       isFavorite = Provider.of<MovieData>(context, listen: false)
