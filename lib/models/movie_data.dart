@@ -17,7 +17,7 @@ class MovieData extends ChangeNotifier {
 
   /// Local saving helper: for favorite saving
   LocalSaveHelper localHelper = LocalSaveHelper(
-    toFileName: "favorite.txt",
+    toFileName: "favorite.json",
   );
 
   /// List of favorite movies
