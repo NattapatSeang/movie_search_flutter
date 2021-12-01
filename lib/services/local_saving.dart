@@ -9,21 +9,29 @@ import 'package:path_provider/path_provider.dart';
 /// Class that's used for help save data locally
 /// ------------------------------------------------------------
 class LocalSaveHelper {
-  /// Get path to save locally in mobile phone
-  static Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
+  final String toFileName;
+  final String? customPath;
 
+  LocalSaveHelper({required this.toFileName, this.customPath});
+
+  /// Get path to save locally in mobile phone
+  Future<String> get localPath async {
+    final Directory directory;
+    if (customPath != null) {
+      return customPath!;
+    }
+    directory = await getApplicationDocumentsDirectory();
     return directory.path;
   }
 
   /// Get file location to save in
-  static Future<File> get _localFile async {
-    final path = await _localPath;
-    return File('$path/favorite.txt');
+  Future<File> get _localFile async {
+    final path = await localPath;
+    return File('$path/$toFileName');
   }
 
   /// Read object from file
-  static Future<List> readObjectList() async {
+  Future<List> readObjectList() async {
     try {
       final file = await _localFile;
 
@@ -39,7 +47,7 @@ class LocalSaveHelper {
 
   /// Write object to file
   /// - objectList = list of object to write
-  static Future<File> writeObjectList(List<Movie> objectList) async {
+  Future<File> writeObjectList(List<Movie> objectList) async {
     final file = await _localFile;
 
     String jsonString = jsonEncode(objectList);

@@ -15,6 +15,11 @@ class MovieData extends ChangeNotifier {
   /// Network helper: for query purpose
   NetworkHelper helper = NetworkHelper();
 
+  /// Local saving helper: for favorite saving
+  LocalSaveHelper localHelper = LocalSaveHelper(
+    toFileName: "favorite.txt",
+  );
+
   /// List of favorite movies
   List<Movie> _favoriteMovies = [];
 
@@ -28,7 +33,7 @@ class MovieData extends ChangeNotifier {
 
   /// Load the favorite from local save and save to favorite
   void initLoadFavorites() async {
-    List result = await LocalSaveHelper.readObjectList();
+    List result = await localHelper.readObjectList();
     _favoriteMovies = result.map((data) => Movie.fromJson(data)).toList();
     notifyListeners();
   }
@@ -37,7 +42,7 @@ class MovieData extends ChangeNotifier {
   /// - newFavorite = new movie to add
   void addFavorite(Movie newFavorite) async {
     _favoriteMovies.add(newFavorite);
-    await LocalSaveHelper.writeObjectList(_favoriteMovies);
+    await localHelper.writeObjectList(_favoriteMovies);
     notifyListeners();
   }
 
@@ -46,7 +51,7 @@ class MovieData extends ChangeNotifier {
   void removeFavorite(Movie removeMovie) async {
     _favoriteMovies
         .removeWhere((element) => element.movieName == removeMovie.movieName);
-    await LocalSaveHelper.writeObjectList(_favoriteMovies);
+    await localHelper.writeObjectList(_favoriteMovies);
     notifyListeners();
   }
 
