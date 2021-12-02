@@ -20,12 +20,13 @@ class _FavoriteButtonState extends State<FavoriteButton> {
   bool isFavorite = false;
 
   /// Either add or remove this movie from favorite
-  void updateFavorite() {
+  void updateFavorite() async {
     if (isFavorite) {
-      Provider.of<MovieData>(context, listen: false)
+      await Provider.of<MovieData>(context, listen: false)
           .removeFavorite(widget.movie);
     } else {
-      Provider.of<MovieData>(context, listen: false).addFavorite(widget.movie);
+      await Provider.of<MovieData>(context, listen: false)
+          .addFavorite(widget.movie);
     }
     setIsFavorite();
   }

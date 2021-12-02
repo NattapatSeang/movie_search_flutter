@@ -8,17 +8,20 @@ import 'package:movie_search/services/networking.dart';
 /// Model for collecting movie data provider
 /// ------------------------------------------------------------
 class MovieData extends ChangeNotifier {
+  /// Network helper: for query purpose
+  NetworkHelper networkHelper;
+
+  /// Local saving helper: for favorite saving
+  LocalSaveHelper localHelper;
+
+  MovieData({
+    required this.networkHelper,
+    required this.localHelper,
+  });
+
   /// ------------------------------------------------------
   /// For favorite
   /// ------------------------------------------------------
-
-  /// Network helper: for query purpose
-  NetworkHelper helper = NetworkHelper();
-
-  /// Local saving helper: for favorite saving
-  LocalSaveHelper localHelper = LocalSaveHelper(
-    toFileName: "favorite.json",
-  );
 
   /// List of favorite movies
   List<Movie> _favoriteMovies = [];
@@ -32,7 +35,7 @@ class MovieData extends ChangeNotifier {
       null);
 
   /// Load the favorite from local save and save to favorite
-  void initLoadFavorites() async {
+  Future<void> initLoadFavorites() async {
     List result = await localHelper.readObjectList();
     _favoriteMovies = result.map((data) => Movie.fromJson(data)).toList();
     notifyListeners();
@@ -40,7 +43,7 @@ class MovieData extends ChangeNotifier {
 
   /// Add new movie to favorite and save to local
   /// - newFavorite = new movie to add
-  void addFavorite(Movie newFavorite) async {
+  Future<void> addFavorite(Movie newFavorite) async {
     _favoriteMovies.add(newFavorite);
     await localHelper.writeObjectList(_favoriteMovies);
     notifyListeners();
@@ -48,7 +51,7 @@ class MovieData extends ChangeNotifier {
 
   /// Remove the movie from favorite
   /// - removeMovie = remove what movie
-  void removeFavorite(Movie removeMovie) async {
+  Future<void> removeFavorite(Movie removeMovie) async {
     _favoriteMovies
         .removeWhere((element) => element.movieName == removeMovie.movieName);
     await localHelper.writeObjectList(_favoriteMovies);
@@ -59,20 +62,24 @@ class MovieData extends ChangeNotifier {
   /// - return => true if update successfully. false if not
   Future<bool> updateFavorite() async {
     try {
+      List<Movie> tempFavoriteList = [];
       // loop through movie in favorite
       for (var favMovie in _favoriteMovies) {
-        List<Movie>? temp = await getQueryList(favMovie.movieName, null);
-        if (temp != null) {
+        List<Movie>? receivedQueryResult =
+            await getQueryList(favMovie.movieName, null);
+        if (receivedQueryResult != null) {
           // after find the updated version, update it
-          Movie? updatedFavMovie = temp.firstWhereOrNull(
+          Movie? updatedFavMovie = receivedQueryResult.firstWhereOrNull(
             (element) => element.movieName == favMovie.movieName,
           );
           if (updatedFavMovie != null) {
-            removeFavorite(favMovie);
-            addFavorite(favMovie);
+            tempFavoriteList.add(updatedFavMovie);
           }
         }
       }
+      // Clear memory and then get updated version of favorite movies list
+      _favoriteMovies.clear();
+      _favoriteMovies = tempFavoriteList;
     } catch (e) {
       notifyListeners();
       return false;
@@ -111,7 +118,8 @@ class MovieData extends ChangeNotifier {
   /// - page = for
   Future<List<Movie>?> getQueryList(String queryString, int? page) async {
     try {
-      Map? apiReturn = await helper.getData(query: queryString, page: page);
+      Map? apiReturn =
+          await networkHelper.getData(query: queryString, page: page);
 
       var result = apiReturn!["results"] as List;
 
