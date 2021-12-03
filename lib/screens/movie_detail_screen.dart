@@ -69,14 +69,14 @@ class InfoBlock extends StatelessWidget {
         children: [
           Text(
             movie.movieName,
-            style: kMovieTitle,
+            style: boldBlackTextStyle,
           ),
           const SizedBox(
             height: 10,
           ),
           Text(
-            "Average Votes: ${movie.voteAvg}",
-            style: kBlackText,
+            "Average Votes: ${movie.voteAverage}",
+            style: middleBlackTextStyle,
           ),
           const SizedBox(
             height: 10,
@@ -89,7 +89,7 @@ class InfoBlock extends StatelessWidget {
                 scrollDirection: Axis.vertical,
                 child: Text(
                   movie.overview,
-                  style: kBlackTextSmall,
+                  style: smallBlackTextStyle,
                 ),
               ),
             ),

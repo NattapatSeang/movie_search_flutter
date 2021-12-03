@@ -7,16 +7,14 @@ import 'package:movie_search/constants.dart';
 /// Class that's used for help get data from api
 /// ------------------------------------------------------------
 class NetworkHelper {
-  /// Get data from api
-  /// - query = query what
-  /// - page = query what page
   Future<Map?> getData(
       {required String query, int? page, http.Client? mockClient}) async {
     String url = "";
+
+    url = "${apiStartURL}query=\"$query\"";
+
     if (page != null) {
-      url = kStartUrl + "query=\"$query\"" + "&page=$page";
-    } else {
-      url = url = kStartUrl + "query=\"$query\"";
+      url = "$url&page=$page";
     }
 
     final http.Response response;
@@ -25,12 +23,12 @@ class NetworkHelper {
       if (mockClient == null) {
         response = await http.get(
           Uri.parse(url),
-          headers: kAuthHeader,
+          headers: apiAuthHeader,
         );
       } else {
         response = await mockClient.get(
           Uri.parse(url),
-          headers: kAuthHeader,
+          headers: apiAuthHeader,
         );
       }
     } catch (e) {

@@ -11,29 +11,25 @@ import 'movie_tile.dart';
 /// Widget class for movie list builder
 /// ------------------------------------------------------------
 class MovieList extends StatefulWidget {
-  /// put this as false if it's used for query. true if for favorite
   final bool forFavorite;
 
-  const MovieList({required this.forFavorite});
+  const MovieList({Key? key, required this.forFavorite}) : super(key: key);
 
   @override
   State<MovieList> createState() => _MovieListState();
 }
 
 class _MovieListState extends State<MovieList> {
-  /// Controller for scroll down
   final _controller = ScrollController();
 
-  /// Increment page
-  int pageShow = 1;
+  int pageShowed = 1;
 
-  /// Check if it have more
   bool haveMore = true;
 
   @override
   void initState() {
     super.initState();
-    pageShow = 1;
+    pageShowed = 1;
 
     // Setup the listener.
     _controller.addListener(() async {
@@ -41,11 +37,11 @@ class _MovieListState extends State<MovieList> {
       if (_controller.position.pixels <= _controller.position.maxScrollExtent &&
           _controller.position.pixels >
               _controller.position.maxScrollExtent - 24) {
-        pageShow++;
+        pageShowed++;
         String queryString =
             Provider.of<SearchData>(context, listen: false).currentSearch;
         if (await Provider.of<MovieData>(context, listen: false)
-            .queryMovieByPage(queryString, pageShow)) {
+            .queryMovieByPage(queryString, pageShowed)) {
           haveMore = true;
         } else {
           haveMore = false;
@@ -86,7 +82,7 @@ class _MovieListState extends State<MovieList> {
                 TextButton(
                   style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
-                      minimumSize: Size(50, 30),
+                      minimumSize: const Size(50, 30),
                       alignment: Alignment.centerLeft),
                   onPressed: () {
                     // Once pressed, it will show the information of that movie

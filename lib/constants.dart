@@ -1,48 +1,49 @@
 import 'package:flutter/material.dart';
 
-// start url for api
-const String kStartUrl =
+const String apiStartURL =
     "http://scb-movies-api.herokuapp.com/api/movies/search?";
-// authen header
-const Map<String, String> kAuthHeader = {
+
+const Map<String, String> apiAuthHeader = {
   'api-key': '623e6b5af5614d7debb532e0472b85c2997e5400'
 };
-// string for image url
-const String kImageGetUrl = "https://image.tmdb.org/t/p/w92";
+
+const String imageLinkStartURL = "https://image.tmdb.org/t/p/w92";
+
+const int maxSearchHistory = 5;
 
 // blue text style
-const kBlueText = TextStyle(
+const blueTextStyle = TextStyle(
   color: Colors.blue,
   fontSize: 16,
 );
 
-const kGreyText = TextStyle(
+const greyTextStyle = TextStyle(
   color: Colors.blueGrey,
   fontSize: 16,
 );
 
-const kBlackTextSmall = TextStyle(
+const smallBlackTextStyle = TextStyle(
   color: Colors.black,
   fontSize: 14,
 );
 
-const kBlackText = TextStyle(
+const middleBlackTextStyle = TextStyle(
   color: Colors.black,
   fontSize: 16,
 );
 
-const kWhiteText = TextStyle(
+const whiteTextStyle = TextStyle(
   color: Colors.white,
   fontSize: 16,
 );
 
-const kMovieTitle = TextStyle(
+const boldBlackTextStyle = TextStyle(
   color: Colors.black,
   fontSize: 16,
   fontWeight: FontWeight.bold,
 );
 
-const kClearIcon = CircleAvatar(
+const clearIcon = CircleAvatar(
   backgroundColor: Colors.black54,
   radius: 8,
   child: Icon(
@@ -52,7 +53,7 @@ const kClearIcon = CircleAvatar(
   ),
 );
 
-const kSearchFieldOutline = OutlineInputBorder(
+const searchFieldOutline = OutlineInputBorder(
   borderSide: BorderSide(color: Colors.white, width: 1.0),
   borderRadius: BorderRadius.all(Radius.circular(12.0)),
 );

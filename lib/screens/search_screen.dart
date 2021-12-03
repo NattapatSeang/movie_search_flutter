@@ -21,7 +21,6 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   bool _cancelBtnVisibility = false;
 
-  /// Show cancel button if clicked on text field
   void textFieldFocus(bool isVisible, BuildContext context) {
     FocusScopeNode currentFocus = FocusScope.of(context);
 
@@ -100,7 +99,7 @@ class _SearchScreenState extends State<SearchScreen> {
             },
             child: const Text(
               "Cancel",
-              style: kBlueText,
+              style: blueTextStyle,
             ),
           )
         : Container();

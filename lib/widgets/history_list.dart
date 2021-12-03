@@ -33,7 +33,7 @@ class HistoryList extends StatelessWidget {
                   },
                   child: Text(
                     searchData.getSearchHistory(index),
-                    style: kBlackText,
+                    style: middleBlackTextStyle,
                   ),
                 ),
                 const Divider(

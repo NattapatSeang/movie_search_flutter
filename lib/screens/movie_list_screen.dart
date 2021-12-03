@@ -20,7 +20,6 @@ class MovieListScreen extends StatefulWidget {
 class _MovieListScreenState extends State<MovieListScreen> {
   String query = "";
 
-  /// Use provider to query the movie and send result to here
   void queryMovie() async {
     Provider.of<MovieData>(context, listen: false).toggleQueryState();
     await Provider.of<MovieData>(context, listen: false)

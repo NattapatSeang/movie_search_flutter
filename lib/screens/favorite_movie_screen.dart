@@ -17,7 +17,6 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
-  ///Update the movie in favorite list
   void updateFavorite() async {
     Provider.of<MovieData>(context, listen: false).toggleQueryState();
     await Provider.of<MovieData>(context, listen: false).updateFavorite();

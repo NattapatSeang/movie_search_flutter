@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 /// Widget for app bar
 /// ------------------------------------------------------------
 class ReusableAppBar {
-  /// Back button for appbar
   static Widget _backButton(BuildContext context) {
     return TextButton(
       child: RichText(
@@ -20,7 +19,7 @@ class ReusableAppBar {
             ),
             TextSpan(
               text: "Back",
-              style: kBlueText,
+              style: blueTextStyle,
             ),
           ],
         ),
@@ -33,10 +32,9 @@ class ReusableAppBar {
     );
   }
 
-  /// app bar with favorite button
   static AppBar withFavorite(BuildContext context) {
     return AppBar(
-      backgroundColor: Color(0xffF8F8F8),
+      backgroundColor: const Color(0xffF8F8F8),
       actions: <Widget>[
         Padding(
           padding: const EdgeInsets.only(right: 20.0),
@@ -59,10 +57,9 @@ class ReusableAppBar {
     );
   }
 
-  /// app bar with back button
   static AppBar withBack(BuildContext context) {
     return AppBar(
-      backgroundColor: Color(0xffF8F8F8),
+      backgroundColor: const Color(0xffF8F8F8),
       leadingWidth: 100,
       leading: Padding(
         padding: const EdgeInsets.only(left: 20.0),
@@ -71,10 +68,9 @@ class ReusableAppBar {
     );
   }
 
-  /// app bar with back and toSearch button
   static AppBar withBackAndToSearch(BuildContext context) {
     return AppBar(
-      backgroundColor: Color(0xffF8F8F8),
+      backgroundColor: const Color(0xffF8F8F8),
       leadingWidth: 100,
       leading: Padding(
         padding: const EdgeInsets.only(left: 20.0),

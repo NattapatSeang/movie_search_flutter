@@ -13,12 +13,12 @@ import 'networking_test.mocks.dart';
 void main() {
   group("Fetch data from network", () {
     test('Return query movie success', () async {
-      String url = kStartUrl + "query=\"Mock Movie\"" + "&page=1";
+      String url = apiStartURL + "query=\"Mock Movie\"" + "&page=1";
 
       final client = MockClient();
       when(client.get(
         Uri.parse(url),
-        headers: kAuthHeader,
+        headers: apiAuthHeader,
       )).thenAnswer((_) async => http.Response(
           '{"total_pages": 1,'
           '"total_results": 2,'
@@ -36,12 +36,12 @@ void main() {
     });
 
     test('Return query movie fail', () async {
-      String url = kStartUrl + "query=\"Mock Movie\"" + "&page=1";
+      String url = apiStartURL + "query=\"Mock Movie\"" + "&page=1";
 
       final client = MockClient();
       when(client.get(
         Uri.parse(url),
-        headers: kAuthHeader,
+        headers: apiAuthHeader,
       )).thenAnswer((_) async => http.Response('Not Found', 404));
       NetworkHelper helper = NetworkHelper();
 

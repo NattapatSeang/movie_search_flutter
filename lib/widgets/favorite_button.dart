@@ -19,7 +19,6 @@ class FavoriteButton extends StatefulWidget {
 class _FavoriteButtonState extends State<FavoriteButton> {
   bool isFavorite = false;
 
-  /// Either add or remove this movie from favorite
   void updateFavorite() async {
     if (isFavorite) {
       await Provider.of<MovieData>(context, listen: false)
@@ -31,7 +30,6 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     setIsFavorite();
   }
 
-  /// Update the state of this favorite button: favorite or unfavorite
   void setIsFavorite() {
     setState(() {
       isFavorite = Provider.of<MovieData>(context, listen: false)
@@ -59,7 +57,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
                     .inFavorite(widget.movie)
                 ? "Unfavorite"
                 : "Favorite",
-            style: kWhiteText,
+            style: whiteTextStyle,
           ),
         ),
       ),

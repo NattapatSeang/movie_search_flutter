@@ -49,14 +49,14 @@ class MovieTile extends StatelessWidget {
                 TextOneLine(
                   movie.movieName,
                   overflow: TextOverflow.ellipsis,
-                  style: kMovieTitle,
+                  style: boldBlackTextStyle,
                 ),
                 const SizedBox(
                   height: 4,
                 ),
                 Text(
                   movie.releaseDate,
-                  style: kGreyText,
+                  style: greyTextStyle,
                 ),
                 const SizedBox(
                   height: 4,
@@ -65,7 +65,7 @@ class MovieTile extends StatelessWidget {
                   movie.overview,
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
-                  style: kBlackTextSmall,
+                  style: smallBlackTextStyle,
                 ),
               ],
             ),

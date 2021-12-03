@@ -14,13 +14,13 @@ void main() {
           movieName: "movieName1",
           releaseDate: "releaseDate1",
           overview: "overview1",
-          voteAvg: 1.0));
+          voteAverage: 1.0));
       testObject.add(Movie(
           posterPath: "posterPath2",
           movieName: "movieName2",
           releaseDate: "releaseDate2",
           overview: "overview2",
-          voteAvg: 2.0));
+          voteAverage: 2.0));
 
       await helper.writeObjectList(testObject);
       List resultJSON = await helper.readObjectList();

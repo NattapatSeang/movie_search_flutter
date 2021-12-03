@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 class SearchTextField extends StatelessWidget {
   final Function onTap;
 
-  SearchTextField({required this.onTap});
+  SearchTextField({Key? key, required this.onTap}) : super(key: key);
 
   final _fieldText = TextEditingController();
 
@@ -41,12 +41,12 @@ class SearchTextField extends StatelessWidget {
           vertical: 5.0,
           horizontal: 10.0,
         ),
-        enabledBorder: kSearchFieldOutline,
-        focusedBorder: kSearchFieldOutline,
+        enabledBorder: searchFieldOutline,
+        focusedBorder: searchFieldOutline,
         suffixIcon: IconButton(
           padding: const EdgeInsets.only(bottom: 0.7),
           // Icon to
-          icon: kClearIcon, // clear text
+          icon: clearIcon, // clear text
           onPressed: () {
             clearText();
           },

@@ -14,7 +14,6 @@ class LocalSaveHelper {
 
   LocalSaveHelper({required this.toFileName, this.customPath});
 
-  /// Get path to save locally in mobile phone
   Future<String> get localPath async {
     final Directory directory;
     if (customPath != null) {
@@ -24,13 +23,11 @@ class LocalSaveHelper {
     return directory.path;
   }
 
-  /// Get file location to save in
   Future<File> get _localFile async {
     final path = await localPath;
     return File('$path/$toFileName');
   }
 
-  /// Read object from file
   Future<List> readObjectList() async {
     try {
       final file = await _localFile;
@@ -45,8 +42,6 @@ class LocalSaveHelper {
     }
   }
 
-  /// Write object to file
-  /// - objectList = list of object to write
   Future<File> writeObjectList(List<Movie> objectList) async {
     final file = await _localFile;
 

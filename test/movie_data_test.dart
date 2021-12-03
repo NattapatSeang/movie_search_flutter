@@ -12,12 +12,15 @@ import 'movie_data_test.mocks.dart';
 
 @GenerateMocks([NetworkHelper, LocalSaveHelper])
 void main() {
+  /// ------------------------------------------------------
+  /// Mock Variable
+  /// ------------------------------------------------------
   Movie firstMockMovie = Movie(
     posterPath: "null",
     movieName: "Mock 1",
     releaseDate: "2012-01-01",
     overview: "overview1",
-    voteAvg: 1.0,
+    voteAverage: 1.0,
   );
 
   Movie secondMockMovie = Movie(
@@ -25,7 +28,7 @@ void main() {
     movieName: "Mock 2",
     releaseDate: "2012-02-02",
     overview: "overview2",
-    voteAvg: 2.0,
+    voteAverage: 2.0,
   );
 
   List<Map<String, dynamic>> jsonMockMovie = [
@@ -50,7 +53,7 @@ void main() {
     movieName: "Mock 1",
     releaseDate: "2012-01-01",
     overview: "overview1",
-    voteAvg: 1.0,
+    voteAverage: 1.0,
   );
 
   Movie secondNewMockMovie = Movie(
@@ -58,7 +61,7 @@ void main() {
     movieName: "Mock 2",
     releaseDate: "2012-02-02",
     overview: "overview2",
-    voteAvg: 2.0,
+    voteAverage: 2.0,
   );
 
   Map jsonNewMockMovie = {
@@ -145,7 +148,7 @@ void main() {
     when(networkHelperMock.getData(query: "Mock 2"))
         .thenAnswer((_) async => jsonNewMockMovie);
 
-    /// Unit test for: Add to favorite
+    /// Unit test
     test('Able to add favorite and read it', () async {
       movieData.addFavorite(firstMockMovie);
       movieData.addFavorite(secondMockMovie);
@@ -156,7 +159,6 @@ void main() {
           "Mock 2");
     });
 
-    /// Unit test for: Remove from favorite
     test('Able to remove favorite', () async {
       movieData.removeFavorite(firstMockMovie);
 
@@ -164,19 +166,16 @@ void main() {
           "Mock 2");
     });
 
-    /// Unit test for: Initial favorite data load
     test('Able to get favorite from file', () async {
       await movieData.initLoadFavorites();
 
       expect(movieData.movieCount(isFromFavorite: true), 2);
     });
 
-    /// Unit test for: Check if this movie is in favorite
     test('Able to check if it is in favorite', () async {
       expect(movieData.inFavorite(firstMockMovie), true);
     });
 
-    /// Unit test for: Check if this movie is not in favorite
     test('Able to check if it is not in favorite', () async {
       expect(
           movieData.inFavorite(Movie(
@@ -184,11 +183,10 @@ void main() {
               movieName: "Mock 3",
               releaseDate: "2012-03-03",
               overview: " 3",
-              voteAvg: 3.0)),
+              voteAverage: 3.0)),
           false);
     });
 
-    /// Unit test for: Update data favorite
     test('Able to update data in favorite', () async {
       await movieData.updateFavorite();
 
